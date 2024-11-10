@@ -1,3 +1,5 @@
+import readline from "node:readline";
+
 import { safeFetch } from "./utils/safeFetch";
 import { safeParse } from "./utils/safeParse";
 import { extractTicketData } from "./utils/extractTicketData";
@@ -24,7 +26,32 @@ const main = async (): Promise<void> => {
 	if (!ticketDetails || ticketDetails.length < 1) return;
 
 	console.log(`Found ${ticketDetails.length} available tickets`);
-	console.log(ticketDetails);
+	const sections = [...new Set(ticketDetails.map((ticket) => ticket.section))];
+	console.log(`Sections found:\n${sections.join("\n")}\n`);
+
+	const rl = readline.createInterface({
+		input: process.stdin,
+		output: process.stdout,
+	});
+
+	rl.question("Enter the section you want to explore: ", (section) => {
+		const selectedTickets = ticketDetails.filter((ticket) =>
+			ticket.section.toLowerCase().includes(section.toLowerCase()),
+		);
+
+		if (selectedTickets.length < 1) {
+			console.log("No tickets found for the specified section");
+			rl.close();
+			return;
+		}
+
+		console.log(
+			`Found ${selectedTickets.length} tickets for section ${section}`,
+		);
+		console.log(selectedTickets);
+
+		rl.close();
+	});
 };
 
 main().catch((error) => {
