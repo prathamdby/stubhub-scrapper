@@ -1,6 +1,6 @@
 import readline from "node:readline";
 
-import { safeFetchAll } from "./utils/safeFetch";
+import { safeFetchAll } from "./utils/safeFetchAll";
 import { extractTicketData } from "./utils/extractTicketData";
 
 import type { ExtractedTicketData } from "./interfaces/ExtractedTicketData";
