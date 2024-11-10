@@ -105,15 +105,15 @@ export const safeFetchAll = async (
 		console.log(`Total pages to fetch: ${totalPages}`);
 
 		// Fetch the remaining pages
-		const requests = [];
-
-		for (let i = 2; i <= totalPages; i++) {
-			requests.push(
-				safeFetch(url, i).then(({ data }) => {
-					allItems.push(...parseIndexData(data).items);
-				}),
-			);
-		}
+		// Start from 2 since we already fetched the first page
+		// i + 2 because when i = 0 we want to fetch page 2
+		// and when i = 1 we want to fetch page 3 and so on
+		const requests = Array.from({ length: totalPages - 1 }, (_, i) =>
+			safeFetch(url, i + 2).then(
+				({ data, fetchSucceeded }) =>
+					fetchSucceeded && allItems.push(...parseIndexData(data).items),
+			),
+		);
 
 		await Promise.all(requests);
 
