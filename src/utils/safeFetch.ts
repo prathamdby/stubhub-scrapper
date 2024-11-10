@@ -3,14 +3,10 @@ import axios from "axios";
 import { AXIOS_REQUEST_TIMEOUT_MS, AXIOS_MAX_RETRIES } from "../config.json";
 
 import type { SafeFetchResponse } from "../interfaces/SafeFetchResponse";
+import type { TimeoutError } from "../interfaces/TimeoutError";
 
 const TIMEOUT_MS = AXIOS_REQUEST_TIMEOUT_MS;
 const MAX_RETRIES = AXIOS_MAX_RETRIES;
-
-interface TimeoutError {
-	code: string;
-	message: string;
-}
 
 export const safeFetch = async (
 	url: string,
