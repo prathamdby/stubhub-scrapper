@@ -42,7 +42,7 @@ const REQUEST_PAYLOAD = {
 
 export const safeFetch = async (
 	url: string,
-	CurrentPage = 1,
+	paginationIndex = 1,
 	retries = 0,
 ): Promise<SafeFetchResponse> => {
 	try {
@@ -50,7 +50,7 @@ export const safeFetch = async (
 			url,
 			{
 				...REQUEST_PAYLOAD,
-				CurrentPage,
+				CurrentPage: paginationIndex,
 				BetterValueTickets: url.includes("stubhub"),
 			},
 			{
