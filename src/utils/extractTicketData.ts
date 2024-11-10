@@ -1,19 +1,10 @@
-import type { IndexData } from "../interfaces/IndexData";
 import type { TicketData } from "../interfaces/TicketData";
 import type { ExtractedTicketData } from "../interfaces/ExtractedTicketData";
 
 export const extractTicketData = async (
-	rawIndexData: string,
+	ticketDetails: TicketData[],
 ): Promise<Array<ExtractedTicketData>> => {
 	try {
-		const parsedIndexData = JSON.parse(rawIndexData);
-
-		if (!isValidIndexData(parsedIndexData))
-			throw new Error("Invalid index data");
-
-		const ticketDetails: TicketData[] = (parsedIndexData as IndexData).grid
-			.items;
-
 		// Filter out any unavailable tickets
 		const filteredTickets = ticketDetails.filter(
 			(ticket) => ticket.availableQuantities.length > 0 && ticket.id > 0,
@@ -39,9 +30,3 @@ export const extractTicketData = async (
 		return [];
 	}
 };
-
-function isValidIndexData(indexData: object): boolean {
-	return Boolean(
-		"grid" in indexData && "items" in (indexData as IndexData).grid,
-	);
-}

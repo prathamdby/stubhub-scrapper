@@ -1,28 +1,22 @@
 import readline from "node:readline";
 
-import { safeFetch } from "./utils/safeFetch";
-import { safeParse } from "./utils/safeParse";
+import { safeFetchAll } from "./utils/safeFetch";
 import { extractTicketData } from "./utils/extractTicketData";
 
-import type { SafeFetchResponse } from "./interfaces/SafeFetchResponse";
-import type { SafeParseResponse } from "./interfaces/SafeParseResponse";
 import type { ExtractedTicketData } from "./interfaces/ExtractedTicketData";
+import type { SafeFetchAllResponse } from "./interfaces/SafeFetchAllResponse";
 
 const STUBHUB_EVENT_URL =
-	"https://www.stubhub.com/martin-garrix-maharashtra-tickets-3-14-2025/event/156123945/?quantity=2";
+	// "https://www.stubhub.com/martin-garrix-maharashtra-tickets-3-14-2025/event/156123945/";
+	// "https://www.stubhub.com/coldplay-auckland-tickets-11-13-2024/event/152622548/";
+	"https://www.stubhub.com/ap-dhillon-mumbai-tickets-12-7-2024/event/155505255/";
 
 const main = async (): Promise<void> => {
-	const { html, fetchSucceeded }: SafeFetchResponse =
-		await safeFetch(STUBHUB_EVENT_URL);
-	if (!fetchSucceeded) return;
+	const { data, fetchAllSucceeded }: SafeFetchAllResponse =
+		await safeFetchAll(STUBHUB_EVENT_URL);
+	if (!fetchAllSucceeded) return;
 
-	const { $, parseSucceeded }: SafeParseResponse = safeParse(html);
-	if (!parseSucceeded) return;
-
-	const indexDataText = $("#index-data").text().trim();
-
-	const ticketDetails: ExtractedTicketData[] =
-		await extractTicketData(indexDataText);
+	const ticketDetails: ExtractedTicketData[] = await extractTicketData(data);
 	if (!ticketDetails || ticketDetails.length < 1) return;
 
 	console.log(`Found ${ticketDetails.length} available tickets`);

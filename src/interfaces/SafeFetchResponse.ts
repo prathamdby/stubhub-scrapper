@@ -1,4 +1,4 @@
 export interface SafeFetchResponse {
-	html: string;
+	data: string;
 	fetchSucceeded: boolean;
 }
