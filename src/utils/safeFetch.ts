@@ -11,7 +11,7 @@ interface TimeoutError {
 
 interface SafeFetchResponse {
 	html: string;
-	success: boolean;
+	fetchSucceeded: boolean;
 }
 
 export const safeFetch = async (
@@ -25,7 +25,7 @@ export const safeFetch = async (
 
 		return {
 			html,
-			success: true,
+			fetchSucceeded: true,
 		};
 	} catch (error: unknown) {
 		if (isTimeoutError(error) && retries < MAX_RETRIES) {
@@ -35,9 +35,11 @@ export const safeFetch = async (
 			return safeFetch(url, retries + 1);
 		}
 
+		console.error(`Error fetching URL: ${error}`);
+
 		return {
 			html: "",
-			success: false,
+			fetchSucceeded: false,
 		};
 	}
 };
