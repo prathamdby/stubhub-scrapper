@@ -8,6 +8,11 @@ export const parseIndexData = (indexData: string): IndexData => {
 	return parsedData as IndexData;
 };
 
-function isValidIndexData(indexData: object): boolean {
-	return Boolean("items" in (indexData as IndexData));
+function isValidIndexData(indexData: unknown): indexData is IndexData {
+	return Boolean(
+		indexData &&
+			typeof indexData === "object" &&
+			"items" in indexData &&
+			Array.isArray(indexData.items),
+	);
 }
