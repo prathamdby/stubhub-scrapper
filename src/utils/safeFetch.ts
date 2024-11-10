@@ -132,10 +132,10 @@ export const safeFetchAll = async (
 };
 
 function isTimeoutError(error: unknown): error is TimeoutError {
-	return (
-		typeof error === "object" &&
-		error !== null &&
-		"code" in error &&
-		(error as TimeoutError).code === "ECONNABORTED"
+	return Boolean(
+		error &&
+			typeof error === "object" &&
+			"code" in error &&
+			(error as TimeoutError).code === "ECONNABORTED",
 	);
 }
