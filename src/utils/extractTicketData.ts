@@ -14,12 +14,10 @@ export const extractTicketData = async (
 		const ticketDetails: TicketData[] = (parsedIndexData as IndexData).grid
 			.items;
 
-		// Filter out any unavailable tickets and sort by price in ascending order
-		const filteredTickets = ticketDetails
-			.filter(
-				(ticket) => ticket.availableQuantities.length > 0 && ticket.id > 0,
-			)
-			.sort((a, b) => a.rawPrice - b.rawPrice);
+		// Filter out any unavailable tickets
+		const filteredTickets = ticketDetails.filter(
+			(ticket) => ticket.availableQuantities.length > 0 && ticket.id > 0,
+		);
 
 		const finalTickets: ExtractedTicketData[] = [];
 
@@ -27,9 +25,10 @@ export const extractTicketData = async (
 			finalTickets.push({
 				id: ticket.id,
 				section: ticket.section,
-				row: ticket.row !== "" ? ticket.row : "N/A",
+				row: ticket.row && ticket.row !== "" ? ticket.row : "N/A",
 				price: ticket.price,
 				priceWithFees: ticket.priceWithFees,
+				totalAvailableTickets: ticket.availableTickets,
 			});
 		}
 

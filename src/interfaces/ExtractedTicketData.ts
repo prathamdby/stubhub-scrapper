@@ -4,4 +4,5 @@ export interface ExtractedTicketData {
 	row: string;
 	price: string;
 	priceWithFees: string;
+	totalAvailableTickets: number;
 }
