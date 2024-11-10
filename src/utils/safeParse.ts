@@ -1,9 +1,6 @@
 import * as cheerio from "cheerio";
 
-export interface SafeParseResponse {
-	$: cheerio.Root;
-	parseSucceeded: boolean;
-}
+import type { SafeParseResponse } from "../interfaces/SafeParseResponse";
 
 export const safeParse = (html: string): SafeParseResponse => {
 	try {

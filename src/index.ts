@@ -1,8 +1,8 @@
 import { safeFetch } from "./utils/safeFetch";
 import { safeParse } from "./utils/safeParse";
 
-import type { SafeFetchResponse } from "./utils/safeFetch";
-import type { SafeParseResponse } from "./utils/safeParse";
+import type { SafeFetchResponse } from "./interfaces/SafeFetchResponse";
+import type { SafeParseResponse } from "./interfaces/SafeParseResponse";
 
 const URL_TO_FETCH =
 	"https://www.stubhub.com/martin-garrix-maharashtra-tickets-3-14-2025/event/156123945/?quantity=2";
