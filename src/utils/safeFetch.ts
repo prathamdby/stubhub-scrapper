@@ -29,7 +29,6 @@ const REQUEST_PAYLOAD = {
 	PriceRange: "0,100",
 	InstantDelivery: false,
 	EstimatedFees: false,
-	BetterValueTickets: true,
 	PriceOption: "",
 	HasFlexiblePricing: false,
 	ExcludeSoldListings: false,
@@ -49,7 +48,11 @@ export const safeFetch = async (
 	try {
 		const { data } = await axios.post<string>(
 			url,
-			{ ...REQUEST_PAYLOAD, CurrentPage },
+			{
+				...REQUEST_PAYLOAD,
+				CurrentPage,
+				BetterValueTickets: url.includes("stubhub"),
+			},
 			{
 				timeout: TIMEOUT_MS,
 			},
@@ -91,10 +94,15 @@ export const safeFetchAll = async (
 			};
 
 		const parsedIndexData = parseIndexData(data);
+
 		allItems.push(...parsedIndexData.items);
 
 		// Calculate the total number of pages to fetch
-		const totalPages = Math.ceil(parsedIndexData.totalFilteredListings / 20);
+		const totalPages = Math.ceil(
+			parsedIndexData.totalFilteredListings / parsedIndexData.pageSize,
+		);
+
+		console.log(`Total pages to fetch: ${totalPages}`);
 
 		// Fetch the remaining pages
 		const requests = [];

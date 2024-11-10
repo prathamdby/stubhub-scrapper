@@ -7,9 +7,8 @@ import type { ExtractedTicketData } from "./interfaces/ExtractedTicketData";
 import type { SafeFetchAllResponse } from "./interfaces/SafeFetchAllResponse";
 
 const STUBHUB_EVENT_URL =
-	// "https://www.stubhub.com/martin-garrix-maharashtra-tickets-3-14-2025/event/156123945/";
-	// "https://www.stubhub.com/coldplay-auckland-tickets-11-13-2024/event/152622548/";
 	"https://www.stubhub.com/ap-dhillon-mumbai-tickets-12-7-2024/event/155505255/";
+// "https://www.viagogo.com/in/Concert-Tickets/International-Traditions/AP-Dhillon-Tickets/E-155505255";
 
 const main = async (): Promise<void> => {
 	const { data, fetchAllSucceeded }: SafeFetchAllResponse =
