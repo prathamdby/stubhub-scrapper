@@ -17,15 +17,11 @@ const main = async (): Promise<void> => {
 	const { $, parseSucceeded }: SafeParseResponse = safeParse(html);
 	if (!parseSucceeded) return;
 
-	const indexDataText = $("#index-data").text() ?? "";
-	if (!indexDataText || indexDataText === "") {
-		console.error("Index data not found in HTML");
-		return;
-	}
+	const indexDataText = $("#index-data").text().trim();
 
 	const ticketDetails: ExtractedTicketData[] =
 		await extractTicketData(indexDataText);
-	if (!ticketDetails) return;
+	if (!ticketDetails || ticketDetails.length < 1) return;
 
 	console.log(`Found ${ticketDetails.length} available tickets`);
 	console.log(ticketDetails);
