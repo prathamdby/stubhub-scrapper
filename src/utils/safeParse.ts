@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 
-interface SafeParseResponse {
+export interface SafeParseResponse {
 	$: cheerio.Root;
 	parseSucceeded: boolean;
 }

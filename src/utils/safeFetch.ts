@@ -9,7 +9,7 @@ interface TimeoutError {
 	message: string;
 }
 
-interface SafeFetchResponse {
+export interface SafeFetchResponse {
 	html: string;
 	fetchSucceeded: boolean;
 }
