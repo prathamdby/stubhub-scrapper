@@ -6,12 +6,12 @@ import type { SafeFetchResponse } from "./interfaces/SafeFetchResponse";
 import type { SafeParseResponse } from "./interfaces/SafeParseResponse";
 import type { ExtractedTicketData } from "./interfaces/ExtractedTicketData";
 
-const URL_TO_FETCH =
+const STUBHUB_EVENT_URL =
 	"https://www.stubhub.com/martin-garrix-maharashtra-tickets-3-14-2025/event/156123945/?quantity=2";
 
 const main = async (): Promise<void> => {
 	const { html, fetchSucceeded }: SafeFetchResponse =
-		await safeFetch(URL_TO_FETCH);
+		await safeFetch(STUBHUB_EVENT_URL);
 	if (!fetchSucceeded) return;
 
 	const { $, parseSucceeded }: SafeParseResponse = safeParse(html);
